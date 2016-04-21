@@ -16,6 +16,7 @@ Este simple script puede:
 ##### Instalación
 No hay paquete de instalación, copia rae en /usr/bin para poder usar el script.
 > $ sudo cp rae /usr/bin
+
 > $ rae
 
 Tambien es valido:
