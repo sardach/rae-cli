@@ -13,8 +13,29 @@ Este simple script puede:
 * Mostrar las posibles conjugaciones de una palabra.
 * Mostrar la palabras del dia.
 
+##### Instalación
+No hay paquete de instalación, copia rae en /usr/bin para poder usar el script.
+> $ sudo cp rae /usr/bin
+> $ rae
+
+Tambien es valido:
+> $ ./rae
+
+Es necesario tener el paquete elinks instalado (apt-get install elinks, en cualquier distro basada en debian).
+
+##### Uso
+      rae [PALABRA], muestra la definición de la palabra, si existe.
+      rae -b [PALABRA], busca la palabra, si existe muestra la definición o muestra otras que podrian estar relacionadas.
+      rae -p, muestra la palabra del dia.
+      rae -A, muestra la definicion de una palabra aleatoriamente.
+      rae -a [PALABRA], muestra anagramas de la palabra.
+      rae -C [LETRAS], muestra palabras que contengan las letras introducidas.
+      rae -e [LETRAS], muestra palabras que empiecen con las letras introducidas.
+      rae -t [LETRAS], muestra palabras que terminen con las letras introducidas.
+      rae -c [PALABRA], muestra las posibles conjugaciones de la palabra.
+
 ##### Notas
-No hay paquete de instalación. Copia rae en /usr/bin.
-Proximamente: Imagenes que ilustren esta cosa.
+
 Se busca: forma de agregar el diccionario esencial y el panhispánico de dudas. Se requiere JS y no es posible procesarlo desde consola.
+
 Por hacer: Mejorar la presentación de las conjugaciones.
