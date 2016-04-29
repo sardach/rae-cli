@@ -1,34 +1,34 @@
 #!/bin/bash
-#0.9
+#0.9.0.1
 
 # Busqueda Avanzada #
 if [ "$1" = "-b" ]; then
-elinks -dump http://dle.rae.es/srv/search?w="$2" > palabra.txt
-sed '/Todos los derechos reservados/q0' palabra.txt > p.txt
-cat p.txt
+elinks -dump http://dle.rae.es/srv/search?w="$2" > .palabra.txt
+sed '/Todos los derechos reservados/q0' .palabra.txt > .p.txt
+cat .p.txt
 
 # Conjugaciones #
 else if [ "$1" = "-c" ]; then
-wget -nv -q -O con1.html -U Mozilla  http://dle.rae.es/srv/fetch?w="$2" 
-sed -n 's/.*href="fetch?id=\([^"]*\).*/\1/p' con1.html > con2.html
-con2=`awk 'NR==1 {print; exit}' con2.html`
-elinks -dump http://dle.rae.es/srv/fetch/fetch?id="$con2" > con3.txt
-sed '/Todos los derechos reservados/q0' con3.txt
+wget -nv -q -O .con1.html -U Mozilla  http://dle.rae.es/srv/fetch?w="$2" 
+sed -n 's/.*href="fetch?id=\([^"]*\).*/\1/p' .con1.html > .con2.html
+con2=`awk 'NR==1 {print; exit}' .con2.html`
+elinks -dump http://dle.rae.es/srv/fetch/fetch?id="$con2" > .con3.txt
+sed '/Todos los derechos reservados/q0' .con3.txt
 
 # Palabras segun primeras letras #
 else if [ "$1" = "-e" ]; then
-elinks -dump "http://dle.rae.es/srv/search?w="$2"&m=31" > contiene.txt
-sed '/Todos los derechos reservados/q0' contiene.txt
+elinks -dump "http://dle.rae.es/srv/search?w="$2"&m=31" > .contiene.txt
+sed '/Todos los derechos reservados/q0' .contiene.txt
 
 # Palabras segun ultimas letras #
 else if [ "$1" = "-t" ]; then
-elinks -dump "http://dle.rae.es/srv/search?w="$2"&m=32" > termina.txt
-sed '/Todos los derechos reservados/q0' termina.txt
+elinks -dump "http://dle.rae.es/srv/search?w="$2"&m=32" > .termina.txt
+sed '/Todos los derechos reservados/q0' .termina.txt
 
 # Palabras segun las letras que contengan #
 else if [ "$1" = "-C" ]; then
-elinks -dump "http://dle.rae.es/srv/search?w="$2"&m=33" > termina.txt
-sed '/Todos los derechos reservados/q0' termina.txt
+elinks -dump "http://dle.rae.es/srv/search?w="$2"&m=33" > .termina.txt
+sed '/Todos los derechos reservados/q0' .termina.txt
 
 # Ayuda #
 else if [ "$1" = "--ayuda" ]; then
@@ -70,18 +70,18 @@ noarg
 
 # Anagramas #
 else if [ "$1" = "-a" ]; then
-elinks -no-numbering -dump http://dle.rae.es/srv/anagram?w="$2" > anagrama.txt
-sed '/Todos los derechos reservados/q0' anagrama.txt
+elinks -no-numbering -dump http://dle.rae.es/srv/anagram?w="$2" > .anagrama.txt
+sed '/Todos los derechos reservados/q0' .anagrama.txt
 
 # Aleatorio #
 else if [ "$1" = "-A" ]; then
-elinks -dump http://dle.rae.es/srv/random > random.txt
-sed '/Todos los derechos reservados/q0' random.txt
+elinks -dump http://dle.rae.es/srv/random > .random.txt
+sed '/Todos los derechos reservados/q0' .random.txt
 
 # Palabra del Dia #
 else if [ "$1" = "-p" ]; then
-elinks -no-references -no-numbering -dump http://dle.rae.es/srv/wotd > wotd.txt
-wotd=`sed 's/<[^>]\+>//g' wotd.txt`
+elinks -no-references -no-numbering -dump http://dle.rae.es/srv/wotd > .wotd.txt
+wotd=`sed 's/<[^>]\+>//g' .wotd.txt`
 cat <<-pdd
 
 Palabra del dia:$wotd
@@ -90,10 +90,10 @@ pdd
 
 # Definiciones #
 else if [ "$1" != "" ]; then
-elinks -dump http://dle.rae.es/srv/fetch?w="$1" > palabra.txt
-sed '/Todos los derechos reservados/q0' palabra.txt > p.txt
-cat p.txt
-p=`awk 'NR==1 {print; exit}' p.txt`
+elinks -dump http://dle.rae.es/srv/fetch?w="$1" > .palabra.txt
+sed '/Todos los derechos reservados/q0' .palabra.txt > .p.txt
+cat .p.txt
+p=`awk 'NR==1 {print; exit}' .p.txt`
 p2="   Real Academia Española © Todos los derechos reservados"
 if [ "$p" = "$p2" ]; then
 cat <<-nores
