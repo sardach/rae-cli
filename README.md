@@ -22,7 +22,7 @@ No hay paquete de instalación, copia rae en /usr/bin para poder usar el script.
 Tambien es valido:
 > $ ./rae
 
-Es necesario tener el paquete elinks instalado (apt-get install elinks, en cualquier distro basada en debian).
+Es necesario tener los paquetes elinks y curl instalados (apt-get install curl elinks, en cualquier distro basada en debian).
 
 ##### Uso
       rae [PALABRA], muestra la definición de la palabra, si existe.
@@ -37,6 +37,8 @@ Es necesario tener el paquete elinks instalado (apt-get install elinks, en cualq
 
 ##### Notas
 
-Se busca: forma de agregar el diccionario esencial y el panhispánico de dudas. Se requiere JS y no es posible procesarlo desde consola.
+Buscare la forma de agregar el diccionario esencial y panhispánico de dudas si alguién me lo pide. Por el momento el script cubre todas mis necesidades.
+
+La solución para saltar el problema de "Please enable JavaScript to view the page content." con cURL podría no ser permanente.
 
 Por hacer: Mejorar la presentación de las conjugaciones.
