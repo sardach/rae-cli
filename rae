@@ -1,64 +1,57 @@
 #!/bin/bash
-#0.10
-
-# Busqueda Avanzada #
-if [ "$1" = "-b" ]; then
-in="$2"
-fu="search?w"
-curl -s 'http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
-elinks -dump .res.txt > .palabra.txt
-sed '/Todos los derechos reservados/q0' .palabra.txt > .p.txt
-cat .p.txt
+#0.12
 
 # Conjugaciones #
-else if [ "$1" = "-c" ]; then
+if [ "$1" = "-c" ]; then
 in="$2"
 fu="fetch?w"
-curl -s 'http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .con1.html
-sed -n 's/.*href="fetch?id=\([^"]*\).*/\1/p' .con1.html > .con2.html
-con2=`awk 'NR==1 {print; exit}' .con2.html`
-in="$con2"
-fu="fetch/fetch?id"
-curl -s 'http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
-elinks -dump .res.txt > .con3.txt
-sed '/Todos los derechos reservados/q0' .con3.txt
+curl -s 'https://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
+elinks -no-numbering -no-references -dump .res.txt > .pa.txt
+sed -n '/Conjugación de/,$p' .pa.txt > .pb.txt
+sed '/Todos los derechos reservados/q0' .pb.txt > .pc.txt
+cat .pc.txt
+p=`awk 'NR==1 {print; exit}' .pc.txt`
+p2=`cat .pc.txt`
 
 # Palabras segun primeras letras #
 else if [ "$1" = "-e" ]; then
-in="$2&m=31"
-fu="search?w"
-curl -s 'http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
-elinks -dump .res.txt > .contiene.txt
-sed '/Todos los derechos reservados/q0' .contiene.txt
+in="$2"
+fu="?m=31"
+curl -s 'https://dle.rae.es/'${in}''${fu}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: https://dle.rae.es/'${in}''${fu}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
+elinks -no-numbering -no-references -dump .res.txt > .contiene.txt
+sed -e '1,/Consultar ]/ d' .contiene.txt > .pa.txt
+sed '/Todos los derechos reservados/q0' .pa.txt
 
 # Palabras segun ultimas letras #
 else if [ "$1" = "-t" ]; then
-in="$2&m=32"
-fu="search?w"
-curl -s 'http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
-elinks -dump .res.txt > .termina.txt
-sed '/Todos los derechos reservados/q0' .termina.txt
+in="$2"
+fu="?m=32"
+curl -s 'https://dle.rae.es/'${in}''${fu}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: https://dle.rae.es/'${in}''${fu}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
+elinks -no-numbering -no-references -dump .res.txt > .contiene.txt
+sed -e '1,/Consultar ]/ d' .contiene.txt > .pa.txt
+sed '/Todos los derechos reservados/q0' .pa.txt
 
-# Palabras segun las letras que contengan #
+# Palabras segun ultimas letras #
 else if [ "$1" = "-C" ]; then
-in="$2&m=33"
-fu="search?w"
-curl -s 'http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
-elinks -dump .res.txt > .termina.txt
-sed '/Todos los derechos reservados/q0' .termina.txt
+in="$2"
+fu="?m=33"
+curl -s 'https://dle.rae.es/'${in}''${fu}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: https://dle.rae.es/'${in}''${fu}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
+elinks -no-numbering -no-references -dump .res.txt > .contiene.txt
+sed -e '1,/Consultar ]/ d' .contiene.txt > .pa.txt
+sed '/Todos los derechos reservados/q0' .pa.txt
 
 # Ayuda #
 else if [ "$1" = "--ayuda" ]; then
 cat <<-ayuda
 
-RAE-CLI 0.10, el Diccionario de la Real Academia Española desde la terminal.
+RAE-CLI 0.12, el Diccionario de la Real Academia Española desde la terminal.
 
 Ejemplos: rae azul
           rae -C ada
 
 Posibles usos en la versión 0.10:
-        rae [PALABRA], muestra la definición de la palabra, si existe.
-        rae -b [PALABRA], busca la palabra, si existe muestra la definición o muestra otras que podrian estar relacionadas.
+        rae [PALABRA], muestra la primera definición de la palabra.
+        rae -td [PALABRA], muestra todas las definiciones de la palabra e información adicional.
         rae -p, muestra la palabra del dia.
         rae -A, muestra la definicion de una palabra aleatoriamente.
         rae -a [PALABRA], muestra anagramas de la palabra.
@@ -71,7 +64,7 @@ Posibles usos en la versión 0.10:
 
 Todas las definiciones son propiedad de la Real Academia Española.
 
-Envíe información sobre errores y sugerencias a <jmrv@opmbx.org>.
+Envíe información sobre errores y sugerencias a <sardach@uwu.mx>.
 
 ayuda
 
@@ -79,7 +72,7 @@ ayuda
 else if [ "$1" = "" ]; then
 cat <<-noarg
 
-Se requieren argumentos para usar este paquete.
+Se requieren argumentos para usar este script.
 
 Intenta «rae --ayuda» para mas información
 
@@ -88,36 +81,58 @@ noarg
 # Anagramas #
 else if [ "$1" = "-a" ]; then
 in="$2"
-fu="anagram?w"
-curl -s 'http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
+fu="?m=anagram"
+curl -s 'https://dle.rae.es/'${in}''${fu}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: https://dle.rae.es/'${in}''${fu}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
 elinks -no-numbering -dump .res.txt > .anagrama.txt
-sed '/Todos los derechos reservados/q0' .anagrama.txt
+sed -e '1,/Consultar ]/ d' .anagrama.txt > .pa.txt
+sed '/Todos los derechos reservados/q0' .pa.txt
 
 # Aleatorio #
 else if [ "$1" = "-A" ]; then
-fu="random"
-curl -s 'http://dle.rae.es/srv/'${fu}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
-elinks -dump .res.txt > .random.txt
-sed '/Todos los derechos reservados/q0' .random.txt
+curl -s -L 'https://dle.rae.es/?m=random' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: https://dle.rae.es/?m=random' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
+elinks -no-numbering -dump  .res.txt > .random.txt
+sed -e '1,/Consultar ]/ d' .random.txt > .pa.txt
+sed '/Conjugación de/,$d' .pa.txt > .pb.txt ##bora las conjugaciones si estan presentes
+sed '/Todos los derechos reservados/q0' .pb.txt
 
 # Palabra del Dia #
 else if [ "$1" = "-p" ]; then
-elinks -no-references -no-numbering -dump http://dle.rae.es/srv/wotd > .wotd.txt
-wotd=`sed 's/<[^>]\+>//g' .wotd.txt`
+curl -s 'https://dle.rae.es/?m=wotd' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: https://dle.rae.es/srv/'${fu}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .wotd1.txt
+elinks -no-references -no-numbering -dump .wotd1.txt > .wotd2.txt
+sed -e '1,/Consultar ]/ d' .wotd2.txt > .pa.txt
+sed '/Todos los derechos reservados/q0' .pa.txt > .pb.txt
+wotd=`sed 's/<[^>]\+>//g' .pb.txt`
 cat <<-pdd
 
 Palabra del dia:$wotd
 
 pdd
+# Todas las Definiciones #
+else if [ "$1" = "-td" ]; then
+in="$2"
+fu="fetch?w"
+curl -s 'https://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
+elinks -no-numbering -no-references -dump .res.txt > .pa.txt
+sed -e '1,/Consultar ]/ d' .pa.txt > .pb.txt
+sed '/Conjugación de/,$d' .pb.txt > .pc.txt ##bora las conjugaciones si estan presentes
+sed '/Todos los derechos reservados/q0' .pc.txt > .pd.txt
+cat .pd.txt
 
-# Definiciones #
+
+
+# Una sola definición #
 else if [ "$1" != "" ]; then
 in="$1"
 fu="fetch?w"
-curl -s 'http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
-elinks -no-references -dump .res.txt > .pa.txt
-sed '/Todos los derechos reservados/q0' .pa.txt > .pc.txt
-cat .pc.txt
+curl -s 'https://dle.rae.es/srv/'${fu}'='${in}'' -H 'Cookie: cookies_rae=aceptada; TS017111a7_77=1936_fb05b6f7981a8b58_rsb_0_rs_%2Fsrv%2Ffetch_rs_1_rs_0; __atuvc=0%7C14%2C0%7C15%2C0%7C16%2C0%7C17%2C1%7C18; __atuvs=590c4926dc3eb1ad000; TS017111a7=017ccc203ce26fac3631d8c63f9c6834ecdab4355207b329951c75a52fa7e965fd8cbdc4ad; _ga=GA1.2.1725722401.1468220521; _gid=GA1.2.170936195.1493977402' -H 'Origin: http://dle.rae.es' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es,en;q=0.8' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://dle.rae.es/srv/'${fu}'='${in}'' -H 'Connection: keep-alive' --data 'TS017111a7_id=3&TS017111a7_cr=c5047f917d2a254b004b5e10a1aff4c8%3Arrrp%3AFyuzkN13%3A1711472717&TS017111a7_76=0&TS017111a7_86=0&TS017111a7_md=1&TS017111a7_rf=0&TS017111a7_ct=0&TS017111a7_pd=0' --compressed > .res.txt
+elinks -no-numbering -no-references -dump .res.txt > .pa.txt
+sed -e '1,/Consultar ]/ d' .pa.txt > .pb.txt
+sed '/2./,$d' .pb.txt > .pc.txt
+sed '/Todos los derechos reservados/q0' .pc.txt > .pd.txt
+echo "
+             Real Academia Española © Todos los derechos reservados
+">> .pd.txt
+cat .pd.txt
 p=`awk 'NR==1 {print; exit}' .pc.txt`
 p2=`cat .pc.txt`
 if [ "$p" = "$p2" ]; then
@@ -129,4 +144,4 @@ cat <<-nores
 nores
 
 
-fi fi fi fi fi fi fi fi fi fi fi fi
+fi fi fi fi fi fi fi fi fi fi fi fi 
