@@ -14,14 +14,19 @@ Este simple script puede:
 * Mostrar la palabras del dia.
 
 ##### Instalación
-> git clone https://github.com/sardach/rae-cli/
-> cd rae-cli
-> sudo install -Dm755 "/rae-cli/rae" "/usr/bin/rae"
-> rae --ayuda
+###### Es necesario tener los paquetes elinks y curl instalados.
+Si usas Arch o alguna distro basada en este, puedes encontrar rae-cli en el AUR
 
+      $ yay -S rae-cli
+
+En cualquiera otra versión de Linux:
+	$ git clone https://github.com/sardach/rae-cli/
+	$ cd rae-cli
+	$ sudo install -Dm755 "/rae-cli/rae" "/usr/bin/rae"
+	$ rae --ayuda
+     
 Tambien puedes simplemente ejecutar "bash rae"
 
-Es necesario tener los paquetes elinks y curl instalados.
 
 ##### Uso
       rae [PALABRA], muestra la definición de la palabra, si existe.
