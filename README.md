@@ -23,7 +23,7 @@ En cualquiera otro sistema:
 
 	$ git clone https://github.com/sardach/rae-cli/
 	$ cd rae-cli
-	$ sudo install -Dm755 "/rae-cli/rae" "/usr/bin/rae"
+	$ sudo install -Dm755 "rae" "/usr/bin/rae"
 	$ rae --ayuda
      
 Tambien puedes simplemente ejecutar "bash rae"
