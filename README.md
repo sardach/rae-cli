@@ -30,7 +30,7 @@ Tambien puedes simplemente ejecutar "bash rae"
 
 
 ##### Uso
-      rae [PALABRA], muestra la definición de la palabra, si existe.
+      rae [PALABRA], muestra la primera definición de la palabra, si existe.
       rae -td [PALABRA],  muestra todas las definiciones de la palabra e información adicional.
       rae -p, muestra la palabra del dia.
       rae -A, muestra la definicion de una palabra aleatoriamente.
@@ -42,4 +42,7 @@ Tambien puedes simplemente ejecutar "bash rae"
 
 ##### Notas
 No soy un programador experto. El script usa metodos rudimentarios para funcionar.
+
+Con la intención de tener una respuesta elegante, desde la versión 0.12, por defecto se muestra solo una definición de la palabra buscada. Si quieres mirar todas las definiciones, debes usar la opción -td 
+
 Por hacer: Mejorar la presentación de las conjugaciones.
