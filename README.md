@@ -15,11 +15,12 @@ Este simple script puede:
 
 ##### Instalación
 ###### Es necesario tener los paquetes elinks y curl instalados.
-Si usas Arch o alguna distro basada en este, puedes encontrar rae-cli en el AUR
+Si usas Arch o alguna distro basada en este, puedes encontrar rae-cli en el AUR:
 
       $ yay -S rae-cli
 
-En cualquiera otra versión de Linux:
+En cualquiera otro sistema:
+
 	$ git clone https://github.com/sardach/rae-cli/
 	$ cd rae-cli
 	$ sudo install -Dm755 "/rae-cli/rae" "/usr/bin/rae"
