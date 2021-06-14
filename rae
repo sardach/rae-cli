@@ -1,6 +1,9 @@
 #!/bin/bash
 #0.12
 
+#verificar si el directorio ./rae existe
+[[ ! -d .rae/ ]] && mkdir .rae/
+
 # Conjugaciones #
 if [ "$1" = "-c" ]; then
 in="$2"
