@@ -1,138 +1,108 @@
 #!/bin/bash
-#0.14
+# RAE-CLI 0.17, consulta el Diccionario de la RAE desde la terminal.
 
-#verificar si el directorio ./rae existe
-[[ ! -d .rae/ ]] && mkdir .rae/
+# Función de ayuda
+mostrar_ayuda() {
+cat <<EOF
+RAE-CLI 0.17, consulta el Diccionario de la RAE desde la terminal.
 
-# Conjugaciones #
-if [ "$1" = "-c" ]; then
-in="$2"
-elinks -no-numbering -no-references -dump "https://dle.rae.es/"${in} > .rae/.pa.txt
-sed -n '/Conjugación de/,$p' .rae/.pa.txt > .rae/.pb.txt
-sed '/Todos los derechos reservados/q0' .rae/.pb.txt > .rae/.pc.txt
-cat .rae/.pc.txt
+Uso:
+  $0 [PALABRA]      -> Muestra la primera definición de la palabra.
+  $0 -t [PALABRA]   -> Muestra todas las definiciones de la palabra.
+  $0 -c  [PALABRA]  -> Conjugaciones (si existen).
+  $0 -a  [PALABRA]  -> Anagramas de la palabra.
+  $0 -A             -> Palabra aleatoria.
+  $0 -d             -> Palabra del día.
+  $0 -E  [LETRAS]   -> Lista palabras que empiecen con LETRAS.
+  $0 -T  [LETRAS]   -> Lista palabras que terminen con LETRAS.
+  $0 -C  [LETRAS]   -> Lista palabras que contengan LETRAS.
+  $0 --ayuda        -> Muestra esta ayuda.
 
-# Palabras segun primeras letras #
-else if [ "$1" = "-e" ]; then
-in="$2"
-fu="?m=31"
-elinks -no-numbering -no-references -dump "https://dle.rae.es/"${in}${fu} > .rae/.contiene.txt
-sed -e '1,/Consultar ]/ d' .rae/.contiene.txt > .rae/.pa.txt
-sed '/Todos los derechos reservados/q0' .rae/.pa.txt
-
-# Palabras segun ultimas letras #
-else if [ "$1" = "-t" ]; then
-in="$2"
-fu="?m=32"
-elinks -no-numbering -no-references -dump "https://dle.rae.es/"${in}${fu} > .rae/.contiene.txt
-sed -e '1,/Consultar ]/ d' .rae/.contiene.txt > .rae/.pa.txt
-sed '/Todos los derechos reservados/q0' .rae/.pa.txt
-
-# Palabras segun ultimas letras #
-else if [ "$1" = "-C" ]; then
-in="$2"
-fu="?m=33"
-elinks -no-numbering -no-references -dump "https://dle.rae.es/"${in}${fu} > .rae/.contiene.txt
-
-sed -e '1,/Consultar ]/ d' .rae/.contiene.txt > .rae/.pa.txt
-sed '/Todos los derechos reservados/q0' .rae/.pa.txt
-
-# Ayuda #
-else if [ "$1" = "--ayuda" ]; then
-cat <<-ayuda
-
-RAE-CLI 0.14, el Diccionario de la Real Academia Española desde la terminal.
-
-Ejemplos: rae azul
-          rae -C ada
-
-Posibles usos en la versión 0.14:
-        rae [PALABRA], muestra la primera definición de la palabra.
-        rae -td [PALABRA], muestra todas las definiciones de la palabra e información adicional.
-        rae -p, muestra la palabra del dia.
-        rae -A, muestra la definicion de una palabra aleatoriamente.
-        rae -a [PALABRA], muestra anagramas de la palabra.
-        rae -C [LETRAS], muestra palabras que contengan las letras introducidas.
-        rae -e [LETRAS], muestra palabras que empiecen con las letras introducidas.
-        rae -t [LETRAS], muestra palabras que terminen con las letras introducidas.
-        rae -c [PALABRA], muestra las posibles conjugaciones de la palabra.
-
-        rae  --ayuda, muestra esta pantalla.
-
-Todas las definiciones son propiedad de la Real Academia Española.
+Las definiciones son propiedad de la RAE, este script solo facilita su consulta vía terminal.
 
 Envíe información sobre errores y sugerencias a <sardach@uwu.mx>.
+EOF
+}
 
-ayuda
+# Verificar si elinks está instalado
+if ! command -v elinks &> /dev/null; then
+  echo "Elinks no está instalado. Por favor, instálalo para usar este script."
+  exit 1
+fi
 
-# Sin Argumentos #
-else if [ "$1" = "" ]; then
-cat <<-noarg
+# Función para obtener texto de la RAE
+obtener_texto() {
+  elinks -dump -no-numbering -no-references "https://dle.rae.es/$1"
+}
 
-Se requieren argumentos para usar este script.
+# Función para obtener HTML crudo de la RAE
+obtener_html() {
+  elinks -source "https://dle.rae.es/$1"
+}
 
-Intenta «rae --ayuda» para mas información
+# Filtrar definiciones relevantes
+filtrar_definiciones() {
+echo "$1" | sed -n '/Caixa/,/Palabra del día/ {
+  /Caixa/d
+  /Palabra del día/d
+  /•/d  
+  /Artículo/d
+  /Conjugación/d
+  /Sinónimos o afines/d
+  /Antónimos u opuestos/d
+  p
+}'
+}
 
-noarg
+# Validar que se proporcionaron argumentos
+[ -z "$1" ] && { echo "Faltan argumentos. Usa --ayuda para más información."; exit 1; }
 
-# Anagramas #
-else if [ "$1" = "-a" ]; then
-in="$2"
-fu="?m=anagram"
-elinks -no-numbering -no-references -dump "https://dle.rae.es/"${in}${fu} > .rae/.anagrama.txt
+# Procesar opciones
+case "$1" in
+  --ayuda)
+    mostrar_ayuda
+    ;;
+  -c)
+    texto=$(obtener_texto "$2")
+    echo "$texto" | sed -n '/^Conjugación de/,/^Sinónimos/ { /Sinónimos/!p }'
+    ;;
+  -E)
+    texto=$(obtener_texto "$2?m=31")
+    echo "$texto" | sed -n '/Listado de lemas que/,/Anterior/p' | sed '/Palabra del día/,$d'
+    ;;
+  -T)
+    texto=$(obtener_texto "$2?m=32")
+    echo "$texto" | sed -n '/Listado de lemas que/,/Anterior/p' | sed '/Palabra del día/,$d'
+    ;;
+  -C)
+    texto=$(obtener_texto "$2?m=33")
+    echo "$texto" | sed -n '/Listado de lemas que/,/Anterior/p' | sed '/Palabra del día/,$d'
+    ;;
+  -a)
+    texto=$(obtener_texto "$2?m=anagram")
+    echo "$texto" | sed -n '/Anagramas/,/Anterior/p' | sed '/Palabra del día/,$d'
+    ;;
+  -A)
+    pagina=$(obtener_texto "?m=random")
+    filtrar_definiciones "$pagina"
+    ;;
+  -d)
+    html=$(obtener_html "?")
+    palabra_del_dia=$(echo "$html" | sed -n 's/.*<span class="c-word-day__word">\([^<]*\)<\/span>.*/\1/p')
 
-sed -e '1,/Consultar ]/ d' .rae/.anagrama.txt > .rae/.pa.txt
-sed '/Todos los derechos reservados/q0' .rae/.pa.txt
-
-# Aleatorio #
-else if [ "$1" = "-A" ]; then
-elinks -no-numbering -no-references -dump "https://dle.rae.es/?m=random" > .rae/.random.txt
-
-sed -e '1,/Consultar ]/ d' .rae/.random.txt > .rae/.pa.txt
-sed '/Conjugación de/,$d' .rae/.pa.txt > .rae/.pb.txt ##bora las conjugaciones si estan presentes
-sed '/Todos los derechos reservados/q0' .rae/.pb.txt
-
-# Palabra del Dia #
-else if [ "$1" = "-p" ]; then
-pdd=`elinks -dump -no-numbering -no-references "https://dle.rae.es/?m=wotd"`
-limpio=$(echo $pdd | sed -n 's/.*Palabra del día \(.*\) \(lunes\|martes\|miércoles\|jueves\|viernes\|sábado\|domingo\).*/\1/p')
-elinks -no-numbering -no-references -dump "https://dle.rae.es/"${limpio} > .rae/.pa.txt
-sed -e '1,/Consultar ]/ d' .rae/.pa.txt > .rae/.pb.txt
-sed '/Conjugación de/,$d' .rae/.pb.txt > .rae/.pc.txt ##bora las conjugaciones si estan presentes
-sed '/Todos los derechos reservados/q0' .rae/.pc.txt > .rae/.pd.txt
-cat .rae/.pd.txt
-# Todas las Definiciones #
-else if [ "$1" = "-td" ]; then
-in="$2"
-elinks -no-numbering -no-references -dump "https://dle.rae.es/"${in} > .rae/.pa.txt
-sed -e '1,/Consultar ]/ d' .rae/.pa.txt > .rae/.pb.txt
-sed '/Conjugación de/,$d' .rae/.pb.txt > .rae/.pc.txt ##bora las conjugaciones si estan presentes
-sed '/Todos los derechos reservados/q0' .rae/.pc.txt > .rae/.pd.txt
-cat .rae/.pd.txt
-
-
-
-# Una sola definición #
-else if [ "$1" != "" ]; then
-in="$1"
-elinks -no-numbering -no-references -dump "https://dle.rae.es/"${in} > .rae/.pa.txt
-sed -e '1,/Consultar ]/ d' .rae/.pa.txt > .rae/.pb.txt
-sed '/2./,$d' .rae/.pb.txt > .rae/.pc.txt
-sed '/Todos los derechos reservados/q0' .rae/.pc.txt > .rae/.pd.txt
-echo "
-             Real Academia Española © Todos los derechos reservados
-">> .rae/.pd.txt
-cat .rae/.pd.txt
-p=`awk 'NR==1 {print; exit}' .rae/.pc.txt`
-p2=`cat .rae/.pc.txt`
-if [ "$p" = "$p2" ]; then
-cat <<-nores
-
-	No se encontraron resultados, la palabra puede no estar registrada o haber sido introducida
-	sin la ortografia correcta.
-
-nores
-
-
-fi fi fi fi fi fi fi fi fi fi fi fi 
-
+    if [ -n "$palabra_del_dia" ]; then
+      definiciones=$(obtener_texto "$palabra_del_dia")
+      filtrar_definiciones "$definiciones"
+    else
+      echo "No se pudo determinar la palabra del día."
+    fi
+    ;;
+  -t)
+    pagina=$(obtener_texto "$2")
+    filtrar_definiciones "$pagina"
+    ;;
+  *)
+    texto=$(obtener_texto "$1")
+    filtrar_definiciones "$texto" | sed '/2./,$d'
+    ;;
+esac
