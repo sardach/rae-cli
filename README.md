@@ -31,20 +31,17 @@ Tambien puedes simplemente ejecutar "bash rae"
 
 ##### Uso
       rae [PALABRA], muestra la primera definición de la palabra, si existe.
-      rae -td [PALABRA],  muestra todas las definiciones de la palabra e información adicional.
+      rae -t [PALABRA],  muestra todas las definiciones de la palabra e información adicional.
       rae -p, muestra la palabra del dia.
       rae -A, muestra la definicion de una palabra aleatoriamente.
       rae -a [PALABRA], muestra anagramas de la palabra.
       rae -C [LETRAS], muestra palabras que contengan las letras introducidas.
-      rae -e [LETRAS], muestra palabras que empiecen con las letras introducidas.
-      rae -t [LETRAS], muestra palabras que terminen con las letras introducidas.
+      rae -E [LETRAS], muestra palabras que empiecen con las letras introducidas.
+      rae -T [LETRAS], muestra palabras que terminen con las letras introducidas.
       rae -c [PALABRA], muestra las posibles conjugaciones de la palabra.
 
 ##### Notas
-No soy un programador experto. El script usa metodos rudimentarios para funcionar.
 
 Con la intención de tener una respuesta elegante, desde la versión 0.12, por defecto se muestra solo una definición de la palabra buscada. Si quieres mirar todas las definiciones, debes usar la opción -td 
 
 Por hacer: Mejorar la presentación de las conjugaciones.
-
-Si tienes problemas con rae-cli, puedes encontrar un script similar aquí: https://github.com/jacob-mf/drae
