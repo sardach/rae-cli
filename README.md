@@ -42,6 +42,6 @@ Tambien puedes simplemente ejecutar "bash rae"
 
 ##### Notas
 
-Con la intención de tener una respuesta elegante, desde la versión 0.12, por defecto se muestra solo una definición de la palabra buscada. Si quieres mirar todas las definiciones, debes usar la opción -td 
+Con la intención de tener una respuesta elegante, desde la versión 0.12, por defecto se muestra solo una definición de la palabra buscada. Si quieres mirar todas las definiciones, debes usar la opción -t 
 
 Por hacer: Mejorar la presentación de las conjugaciones.
