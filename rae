@@ -83,7 +83,8 @@ case "$1" in
     echo "$texto" | sed -n '/Anagramas/,/Anterior/p' | sed '/Palabra del día/,$d'
     ;;
   -A)
-    pagina=$(obtener_texto "?m=random")
+    w=$((RANDOM % 100001))
+    pagina=$(obtener_texto "?w=$w&m=random")
     filtrar_definiciones "$pagina"
     ;;
   -d)
